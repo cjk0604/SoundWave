@@ -7,10 +7,11 @@ var express     = require("express"),
     mysql = require('mysql');
 
 //requiring routes
-var musiclistRoutes = require("./routes/musiclist"),
-    indexRoutes      = require("./routes/index"),
+var musiclistRoutes   = require("./routes/musiclist"),
+    indexRoutes       = require("./routes/index"),
     routeDesignRoutes = require("./routes/routelist"),
-    con = require("./models/connection");
+    dashboardRoutes   = require("./routes/dashboard.js"),
+    con               = require("./models/connection");
 
 
 con.connect(function(err) {
@@ -27,6 +28,7 @@ app.use(flash());
 app.use("/", indexRoutes);
 app.use("/musiclist", musiclistRoutes);
 app.use("/routelist", routeDesignRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 
 
@@ -37,4 +39,4 @@ app.listen(3000, process.env.IP, function(){
 
 ///Hello
 // Good boi
-// Let's Go Man City! 
+// Let's Go Man City!

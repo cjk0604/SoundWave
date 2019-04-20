@@ -3,18 +3,7 @@ var router = express.Router();
 
 var con = require("../models/connection");
 
-// app.get("/", function(req, res){
-//     // Find count of users in DB
-//     var q = "SELECT COUNT(*) AS count FROM users";
-//     con.query(q, function(err, results){
-//         if(err) throw err;
-//       //  var count = results[0].count;con
-//         //res.render("home", {count: count});
-//         console.log("connect!");
-//     });
-// });
-
-// --------------------
+// -------------------------------------------------------------------------- //
 
 let newMusiclist = {name: "", image: "", description: "", price: 0}
 
@@ -42,18 +31,13 @@ router.post("/", function (req, res) {
     // get data from form and add to musiclist array
 
     var name = req.body.name;
-
     console.log(req.body);
-
     var quantity = parseInt(req.body.quantity);
-
     console.log(quantity);
-    console.log(typeof quantity);
-
+      console.log(typeof quantity);
     var image = req.body.image;
     var desc = req.body.description;
     var price = parseFloat(req.body.price);
-
     console.log(typeof price);
     //newMusiclist = {name: name, image: image, description: desc, price: price}
     // albumList.push(newMusiclist);
@@ -65,8 +49,8 @@ router.post("/", function (req, res) {
         console.log("UPDATE");
         console.log(results);
     });
-        var q = "select * from albums";
-        con.query(q, function(err, albumlist){
+        var qq = "select * from albums";
+        con.query(qq, function(err, albumlist){
           if(err) console.log(err);
 
           console.log("done!");
@@ -84,15 +68,21 @@ router.get("/:id", function (req, res) {
     let music_id = req.params.id;
     console.log(music_id);
 
-    var q = `select * from albums where id=${music_id}`;
+    var s = `select * from albums where id=${music_id}`;
+    console.log(s);
 
-    con.query(q, function(err, foundMusiclist){
+    con.query(s, function(err, albumlist){
       if(err) console.log(err);
-         console.log(foundMusiclist);
-      res.render("musiclist/show", {musiclist: foundMusiclist, currentUser: ""});
 
-  });
-});
+      console.log("done!");
+      console.log(albumlist);
+    //let foundMusiclist = select * from albumlists where id = music_id
+    //find the musiclist with provided ID from database
+    // let  foundMusiclist = {name: "Twice", image: "https://i.ytimg.com/vi/mg1QGwSzKLM/maxresdefault.jpg", _id:"1", description: "2nd Album", price: 15};
+            //render show template with that musiclist
+            res.render("musiclist/show", {musiclist: albumlist, currentUser: ""});
+        });
+    });
 
 // EDIT MUSICLIST ROUTE
 router.get("/:id/edit", function (req, res) {
@@ -113,26 +103,27 @@ router.get("/:id/edit", function (req, res) {
 });
 
 // UPDATE MUSICLIST ROUTE
-router.put("/:id", function (req, res) {
-
-        //redirect somewhere(show page)
-        res.redirect("/musiclist/");
-
-});
+// router.put("/:id", function (req, res) {
+//
+//         //redirect somewhere(show page)
+//         res.redirect("/musiclist/");
+//
+// });
 
 // DESTROY MUSICLIST ROUTE
 router.post("/:id", function (req, res) {
-    let __id = req.params.id;
-    let sss = `DELETE FROM albums where id = ${__id}`;
-    con.query(sss, function(err, deleted_item){
-      if(err){
-        console.log(err);
-      }
-      console.log(deleted_item);
-      res.redirect("/musiclist/");
-    })
-      // albumList.pop();
-      //   res.render("musiclist/index", {musiclist: albumList, currentUser: ""});
+    let music_id = req.params.id;
+    var ss = `DELETE FROM albums where id=${music_id}`;
+    console.log(ss);
+
+    con.query(ss, function(err, delete_id){
+          if(err) console.log(err);
+
+          console.log("done!");
+          console.log(delete_id);
+
+        res.redirect("/musiclist/");
+      });
 });
 
 module.exports = router;
