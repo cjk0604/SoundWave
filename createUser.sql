@@ -1,3 +1,7 @@
+CRAETE DATABASE sound_wave_v1;
+
+USE soud_wave_v1;
+
 CREATE table users(
   id VARCHAR(100) PRIMARY KEY NOT NULL,
   password VARCHAR(100) NOT NULL,
