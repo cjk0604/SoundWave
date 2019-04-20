@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome To SoundWave Music Store!</h1>
+            <p>View our music albums from various artists!</p>
+            <p>
+                <a class="btn btn-primary btn-large" href="/musiclist/new">Add New Music Albums</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% musiclist.forEach(function(musiclist){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src="<%= musiclist.image %>">
+                <div class="caption">
+                    <h4><%= musiclist.title %></h4>
+                </div>
+                <p>
+                    <a href="/musiclist/"<%= musiclist.id %> class="btn btn-primary">More Info</a>
+                </p>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</div>
+
+<% include ../partials/footer %>

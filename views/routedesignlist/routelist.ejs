@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h1>This is the Route List Page</h1>
+
+
+<h2>Index routes </h2>
+
+<h3>root</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/</td>
+      <td>Show the landing page</td>
+    </tr>
+   </tbody>
+</table>
+
+
+<h3>register</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/register</td>
+      <td>Show the sign up form page</td>
+    </tr>
+   </tbody>
+
+   <tbody>
+    <tr>
+      <th scope="row">create</th>
+      <td>post</td>
+      <td>/register</td>
+      <td>Handle sign up logic</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>login</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/login</td>
+      <td>Show the login page</td>
+    </tr>
+   </tbody>
+
+   <tbody>
+    <tr>
+      <th scope="row">create</th>
+      <td>post</td>
+      <td>/logout</td>
+      <td>Handle login logic</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>logout</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/login</td>
+      <td>Show the logout page</td>
+    </tr>
+   </tbody>
+</table>
+
+<br>
+<h2>Musiclist routes </h2>
+
+<h3>musiclist root</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/musiclist</td>
+      <td>Show the music list page</td>
+    </tr>
+   </tbody>
+
+  <tbody>
+    <tr>
+      <th scope="row">create</th>
+      <td>post</td>
+      <td>/musiclist</td>
+      <td>Add ne musiclist to database</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>new</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/musiclist/new</td>
+      <td>Show form to create new music list</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>show</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/musiclist/:id</td>
+      <td>Show more information about the specific id</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>edit</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/musiclist/:id/edit</td>
+      <td>Show edit page of specific id</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>update</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">update</th>
+      <td>put</td>
+      <td>/musiclist/:id</td>
+      <td>Update musiclist route with specific id</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>delete</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">delete</th>
+      <td>delete</td>
+      <td>/musiclist/:id</td>
+      <td>Delete musiclist route with specific id</td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>user profile</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/musiclist/:user</td>
+      <td>Show user profile</td>
+    </tr>
+   </tbody>
+</table>
+
+</body>
+</html>

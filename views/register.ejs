@@ -1,0 +1,29 @@
+<% include ./partials/header %>
+
+<div class="container">
+
+<form action="/register" method="post" class="form-horizontal">
+  <h1 class = "fomr-signin-heading">Sign Up!</h1>
+    <div class="form-group">
+        <label class="control-label col-xs-2">Username</label>
+        <div class="col-xs-10">
+            <input type="text" name="username" placeholder="username" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2">Password</label>
+        <div class="col-xs-10">
+            <input type="password" name="password" placeholder="password" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <input class = "btn btn-lg btn-primary" type="submit" value="Sign Up!">
+        </div>
+    </div>
+</form>
+
+</div>
+
+
+<% include ./partials/footer %>
