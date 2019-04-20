@@ -42,13 +42,18 @@ router.post("/", function (req, res) {
     // get data from form and add to musiclist array
 
     var name = req.body.name;
+    
     console.log(req.body);
+    
     var quantity = parseInt(req.body.quantity);
+    
     console.log(quantity);
-      console.log(typeof quantity);
+    console.log(typeof quantity);
+    
     var image = req.body.image;
     var desc = req.body.description;
     var price = parseFloat(req.body.price);
+    
     console.log(typeof price);
     //newMusiclist = {name: name, image: image, description: desc, price: price}
     // albumList.push(newMusiclist);
@@ -76,18 +81,22 @@ router.get("/new", function (req, res) {
 
 // SHOW - shows more info about one musiclist
 router.get("/:id", function (req, res) {
-    let music_id = req.params.id
-    //let foundMusiclist = select * from albumlists where id = music_id
-    //find the musiclist with provided ID from database
-    // let  foundMusiclist = {name: "Twice", image: "https://i.ytimg.com/vi/mg1QGwSzKLM/maxresdefault.jpg", _id:"1", description: "2nd Album", price: 15};
-            //render show template with that musiclist
-            res.render("musiclist/show", {musiclist: foundMusiclist, currentUser: ""});
-        });
+    let music_id = req.params.id;
+    console.log(music_id);
+
+    var q = `select * from albums where id=${music_id}`;
+ 
+    con.query(q, function(err, foundMusiclist){
+      if(err) console.log(err);
+         console.log(foundMusiclist);
+      res.render("musiclist/show", {musiclist: foundMusiclist, currentUser: ""});
+
+  });
+});
 
 // EDIT MUSICLIST ROUTE
 router.get("/:id/edit", function (req, res) {
-
-        res.render("musiclist/edit", {musiclist: foundMusiclist, currentUser: ""});
+    res.render("musiclist/edit", {musiclist: foundMusiclist, currentUser: ""});
 })
 
 // UPDATE MUSICLIST ROUTE
@@ -100,8 +109,17 @@ router.put("/:id", function (req, res) {
 
 // DESTROY MUSICLIST ROUTE
 router.post("/:id", function (req, res) {
-      albumList.pop();
-        res.render("musiclist/index", {musiclist: albumList, currentUser: ""});
+    let __id = req.params.id;
+    let sss = `DELETE FROM albums where id = ${__id}`;
+    con.query(sss, function(err, deleted_item){
+      if(err){
+        console.log(err);
+      }
+      console.log(deleted_item);
+      res.redirect("/musiclist/");
+    })
+      // albumList.pop();
+      //   res.render("musiclist/index", {musiclist: albumList, currentUser: ""});
 });
 
 module.exports = router;

@@ -4,7 +4,7 @@ CREATE table albums(
   price DECIMAL(6,2),
   title VARCHAR(100),
   description VARCHAR(100),
-  image VARCHAR(100)
+  image VARCHAR(512)
 );
 
 CREATE TABLE songs(

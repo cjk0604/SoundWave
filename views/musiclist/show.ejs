@@ -9,32 +9,34 @@
             </div>
         </div>
         <div class="col-md-9">
+ 
             <div class="thumbnail_original">
-                <img class="img-responsive" src="<%= musiclist.image %>">
+                    <% musiclist.forEach(function(musiclist){ %>
+                <img class="img-responsive" src="<%= musiclist.image %>" width="1280px" height="600px">
                 <div class="caption-full">
                     <h4 class="pull-right">$<%= musiclist.price %></h4>
-                    <h4><a><%=musiclist.name%></a></h4>
+                    <h4><a><%=musiclist.title%></a></h4>
                     <p><%= musiclist.description %></p>
                     <p>
 
                     </p>
-                    <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist._id %>/edit">Buy the Album</a>
+                    <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist.id %>/edit">Buy the Album</a>
 
                     <!-- only admin has access to it -->
-                        <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist._id %>/edit">Edit</a>
-                        <form id="delete-form" action="/musiclist/<%= musiclist._id %>" method="post">
+                        <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist.id %>/edit">Edit</a>
+                        <form id="delete-form" action="/musiclist/<%= musiclist.id %>" method="post">
                             <button class="btn btn-xs btn-danger">Delete</button>
                         </form>
                     <!-- only admin has access to it -->
 
                     <div class="">
                       <audio controls>
-                          <source src="horse.ogg" type="audio/ogg">
-                          <source src="horse.mp3" type="audio/mpeg">
+                          <source src="" type="audio/ogg">
+                          <source src="" type="audio/mpeg">
                         Your browser does not support the audio element.
                         </audio>
                     </div>
-
+<!-- 
                     <div class="">
                       <audio controls>
                           <source src="horse.ogg" type="audio/ogg">
@@ -49,11 +51,12 @@
                           <source src="horse.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
                         </audio>
-                    </div>
+                    </div> -->
                     <div style="margin-top: 10px;">
                         <a class="btn btn-default" href="/musiclist"><i class="fa fa-arrow-left"></i> Go back</a>
                     </div>
                 </div>
+                <% }); %>
             </div>
 
         </div>

@@ -5,7 +5,7 @@ CREATE table users(
   last_name VARCHAR(100),
   loyal_point INT DEFAULT 0,
   is_admin INT DEFAULT 0,
-  email VARCHAR(100)
+  email VARCHAR(300)
 );
 
 
