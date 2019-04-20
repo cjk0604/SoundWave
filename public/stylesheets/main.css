@@ -5,7 +5,10 @@
 }
 
 .thumbnail_original{
-  width: 100%;
+  /* width: 100%; */
+    object-fit: contain;
+    width: 100%;
+    height: auto;
 }
 
 

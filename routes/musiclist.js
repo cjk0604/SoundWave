@@ -42,6 +42,7 @@ router.post("/", function (req, res) {
     // get data from form and add to musiclist array
 
     var name = req.body.name;
+<<<<<<< HEAD
 
     console.log(req.body);
 
@@ -54,6 +55,20 @@ router.post("/", function (req, res) {
     var desc = req.body.description;
     var price = parseFloat(req.body.price);
 
+=======
+    
+    console.log(req.body);
+    
+    var quantity = parseInt(req.body.quantity);
+    
+    console.log(quantity);
+    console.log(typeof quantity);
+    
+    var image = req.body.image;
+    var desc = req.body.description;
+    var price = parseFloat(req.body.price);
+    
+>>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
     console.log(typeof price);
     //newMusiclist = {name: name, image: image, description: desc, price: price}
     // albumList.push(newMusiclist);
@@ -85,7 +100,11 @@ router.get("/:id", function (req, res) {
     console.log(music_id);
 
     var q = `select * from albums where id=${music_id}`;
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
     con.query(q, function(err, foundMusiclist){
       if(err) console.log(err);
          console.log(foundMusiclist);
@@ -96,6 +115,7 @@ router.get("/:id", function (req, res) {
 
 // EDIT MUSICLIST ROUTE
 router.get("/:id/edit", function (req, res) {
+<<<<<<< HEAD
   let music_id = req.params.id;
   console.log(music_id);
 
@@ -111,6 +131,10 @@ router.get("/:id/edit", function (req, res) {
         res.render("musiclist/edit", {musiclist: albumlist, currentUser: ""});
       });
 });
+=======
+    res.render("musiclist/edit", {musiclist: foundMusiclist, currentUser: ""});
+})
+>>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
 
 // UPDATE MUSICLIST ROUTE
 router.put("/:id", function (req, res) {

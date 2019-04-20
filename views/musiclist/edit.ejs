@@ -1,5 +1,6 @@
 <% include ../partials/header %>
 <div class="container">
+        <% musiclist.forEach(function(musiclist){ %>
     <div class="row">
           <% musiclist.forEach(function(musiclist){ %>
         <h1 style="text-align: center">Edit <%= musiclist.name %></h1>
@@ -25,5 +26,6 @@
         </div>
         <% }); %>
     </div>
+    <% }); %>
 </div>
 <% include ../partials/footer %>
