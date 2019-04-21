@@ -9,11 +9,7 @@
             </div>
         </div>
         <div class="col-md-9">
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
             <div class="thumbnail_original">
                     <% musiclist.forEach(function(musiclist){ %>
                 <img class="img-responsive" src="<%= musiclist.image %>" width="1280px" height="600px">
@@ -24,10 +20,7 @@
                     <p>
                     </p>
                     <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist.id %>/edit">Buy the Album</a>
-<<<<<<< HEAD
-=======
 
->>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
                     <!-- only admin has access to it -->
                         <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist.id %>/edit">Edit</a>
                         <form id="delete-form" action="/musiclist/<%= musiclist.id %>" method="post">
@@ -41,26 +34,7 @@
                         Your browser does not support the audio element.
                         </audio>
                     </div>
-<<<<<<< HEAD
-<!--
-=======
-<!-- 
->>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
-                    <div class="">
-                      <audio controls>
-                          <source src="horse.ogg" type="audio/ogg">
-                          <source src="horse.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                        </audio>
-                    </div>
 
-                    <div class="">
-                      <audio controls>
-                          <source src="horse.ogg" type="audio/ogg">
-                          <source src="horse.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                        </audio>
-                    </div> -->
                     <div style="margin-top: 10px;">
                         <a class="btn btn-default" href="/musiclist"><i class="fa fa-arrow-left"></i> Go back</a>
                     </div>

@@ -23,9 +23,28 @@ let albumList = [
   {name: "Queen", image: "https://images-na.ssl-images-amazon.com/images/I/5193WwLsvgL._SX384_BO1,204,203,200_.jpg", _id:"1", price: 13}
 ]
 
+// ============= ROUTES ==============
+// Define escapeRegex function to avoid regex DDoS attack
+// const escapeRegex = text => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 
 //INDEX - show all music list
 router.get("/", function (req, res) {
+  let noMatch = null;
+  console.log(req.query.search);
+    if (req.query.search) {
+      // const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+      let search_query = `select * from albums where title like "%${req.query.search}%"`;
+      con.query(search_query, function(err, albumlist_){
+        if(err){ console.log(err);}
+        else{
+          if(albumlist_.length < 1){
+            noMatch = "No albums found, pleaes try again.";
+          }
+          res.render("musiclist/index", {musiclist: albumlist_, currentUser: "", noMatch: noMatch});
+        }
+      });
+    }
+    else{
     // Get all music list from DB
     var q = "select * from albums";
     con.query(q, function(err, albumlist_){
@@ -33,16 +52,17 @@ router.get("/", function (req, res) {
 
       console.log("done!");
 
-            res.render("musiclist/index", {musiclist: albumlist_, currentUser: ""});
+            res.render("musiclist/index", {musiclist: albumlist_, currentUser: "", noMatch: noMatch});
         })
-      });
+      }
+    });
 
 //CREATE - add new musiclist to DB
 router.post("/", function (req, res) {
     // get data from form and add to musiclist array
 
     var name = req.body.name;
-<<<<<<< HEAD
+
 
     console.log(req.body);
 
@@ -55,20 +75,6 @@ router.post("/", function (req, res) {
     var desc = req.body.description;
     var price = parseFloat(req.body.price);
 
-=======
-    
-    console.log(req.body);
-    
-    var quantity = parseInt(req.body.quantity);
-    
-    console.log(quantity);
-    console.log(typeof quantity);
-    
-    var image = req.body.image;
-    var desc = req.body.description;
-    var price = parseFloat(req.body.price);
-    
->>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
     console.log(typeof price);
     //newMusiclist = {name: name, image: image, description: desc, price: price}
     // albumList.push(newMusiclist);
@@ -100,11 +106,7 @@ router.get("/:id", function (req, res) {
     console.log(music_id);
 
     var q = `select * from albums where id=${music_id}`;
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
     con.query(q, function(err, foundMusiclist){
       if(err) console.log(err);
          console.log(foundMusiclist);
@@ -115,7 +117,7 @@ router.get("/:id", function (req, res) {
 
 // EDIT MUSICLIST ROUTE
 router.get("/:id/edit", function (req, res) {
-<<<<<<< HEAD
+
   let music_id = req.params.id;
   console.log(music_id);
 
@@ -131,17 +133,26 @@ router.get("/:id/edit", function (req, res) {
         res.render("musiclist/edit", {musiclist: albumlist, currentUser: ""});
       });
 });
-=======
-    res.render("musiclist/edit", {musiclist: foundMusiclist, currentUser: ""});
-})
->>>>>>> 23cd809c310de3f9bd0c64e3fed13901bbf4d751
 
 // UPDATE MUSICLIST ROUTE
 router.put("/:id", function (req, res) {
+        console.log(req.body);
+        let title = req.body.musiclist.name;
+        let image = req.body.musiclist.image;
+        let price = req.body.musiclist.price;
+        let description = req.body.musiclist.description;
+        let music_id = req.params.id;
+        console.log(title);
 
+        let update_query = `UPDATE albums SET title="${title}", image="${image}", price=${price}, description="${description}" where id = ${music_id}`
         //redirect somewhere(show page)
-        res.redirect("/musiclist/");
-
+        con.query(update_query, function(err, updated_item){
+          if(err){
+            console.log(err);
+          }
+          console.log(updated_item);
+          res.redirect("/musiclist/");
+        })
 });
 
 // DESTROY MUSICLIST ROUTE
