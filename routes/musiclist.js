@@ -42,7 +42,7 @@ router.get("/", function (req, res) {
           if(albumlist_.length < 1){
             noMatch = "No albums found, pleaes try again.";
           }
-          res.render("musiclist/index", {musiclist: albumlist_, currentUser: "", noMatch: noMatch, is_admin: req.session.isAdmin});
+          res.render("musiclist/index", {musiclist: albumlist_, currentUser: req.session.username, noMatch: noMatch, is_admin: req.session.isAdmin});
         }
       });
     }

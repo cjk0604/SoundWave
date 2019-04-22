@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+<div class="content">
+    <div class="container-fluid">
+
+      <!-- navigate to order record after submission -->
+    <form action="/dashboard/order/<%= currentUser %>?_method=PUT" method="POST">
+      <!-- Extract all user info from db -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Shopping Cart</h4>
+                        <p class="category">Please confirm your payment</p>
+                    </div>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <th>Username</th>
+                              <th>Album ID</th>
+                              <th>Purchase Date</th>
+                              <th>Price</th>
+                              <th>Refund Status</th>
+
+                            </thead>
+                            <tbody>
+                              <% orders.forEach(function(order){ %>
+                                <tr>
+
+                                  <td><%= order.username %></td>
+
+
+                                  <td><%= order.album_id %></td>
+
+
+                                  <td><%= order.data_of_order %></td>
+
+
+                                  <td><%= order.price %></td>
+
+                                  <td><%= order.refund_status %></td>
+
+                                </tr>
+                              <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-info btn-fill pull-right">Confirm Payment</button>
+            </div>
+
+
+
+        </div>
+        </form>
+    </div>
+</div>
+
+<% include ../partials/footer %>

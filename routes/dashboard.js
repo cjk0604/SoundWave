@@ -6,6 +6,7 @@ let connection = require("../models/connection");
 router.get("/", function(req, res){
     let all_users_query = `select * from users`;
     let all_album_query = `select * from albums`;
+    let all_order_query = `select * from orders`;
 
     // find all users from db
     connection.query(all_users_query, function(err, allusers){
@@ -21,7 +22,16 @@ router.get("/", function(req, res){
           }else{
             let allAlbums_in_array = allAlbums;
             console.log(allAlbums_in_array);
-            res.render("dashboard/dashboard", {currentUser: req.session.username, users: allusers_in_array, albums: allAlbums_in_array});
+            connection.query(all_order_query, function(err, allOrders){
+              if(err){
+                console.log(err);
+              }
+              else{
+                console.log(allOrders);
+                res.render("dashboard/dashboard", {currentUser: req.session.username, users: allusers_in_array, albums: allAlbums_in_array, allOrders: allOrders});
+              }
+            })
+
           }
         })
       }
@@ -62,6 +72,21 @@ router.put("/:username", function(req, res){
   })
 });
 
+// show user order Record
+router.get("/:username/order", function(req, res){
+    let username = req.params.username;
+    let order_query = `select * from orders where username = "${username}"`;
+    connection.query(order_query, function(err, orders){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(orders);
+        res.render("dashboard/order", {orders: orders, currentUser: req.session.username});
+      }
+    })
+})
+
 router.put("/order/:username", function(req, res){
   let total_loyal_added = 0.0;
   let username = req.body.username;
@@ -91,7 +116,7 @@ router.put("/order/:username", function(req, res){
                 console.log(err);
               }
                 else {
-                    let current_loyalty_point =  user[0].loyal_point;
+                    let current_loyalty_point =  user.loyal_point;
                     current_loyalty_point += total_loyal_added;
                     let loyalty_update_query = `UPDATE users SET loyal_point="${current_loyalty_point}" where username = "${username[i]}"`
                     connection.query(loyalty_update_query, function(err, updated_user){
