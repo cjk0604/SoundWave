@@ -1,13 +1,129 @@
-var express = require("express");
-var router  = express.Router();
+let express = require("express");
+let router  = express.Router();
+let connection = require("../models/connection");
 
-//root route
+//admin dashboard route
 router.get("/", function(req, res){
-    res.render("dashboard/dashboard");
+    let all_users_query = `select * from users`;
+    let all_album_query = `select * from albums`;
+
+    // find all users from db
+    connection.query(all_users_query, function(err, allusers){
+      if(err){
+        console.log(allusers);
+      }else{
+        let allusers_in_array = allusers;
+        console.log(allusers_in_array);
+        // find all albums from db
+        connection.query(all_album_query, function(err, allAlbums){
+          if(err){
+            console.log(allAlbums);
+          }else{
+            let allAlbums_in_array = allAlbums;
+            console.log(allAlbums_in_array);
+            res.render("dashboard/dashboard", {currentUser: req.session.username, users: allusers_in_array, albums: allAlbums_in_array});
+          }
+        })
+      }
+    });
 });
 
-router.get("/edit", function(req, res){
-  res.render("dashboard/user");
-})
+
+// show user information enquiry page
+router.get("/:username", function(req, res){
+  let username = req.params.username;
+  var q = `select * from users where username="${username}"`;
+  connection.query(q, function(err, userinfo){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(userinfo[0]);
+        res.render("dashboard/user", {currentUser: req.session.username, userinfo: userinfo[0]});
+    }
+  })
+});
+
+// Update user information
+router.put("/:username", function(req, res){
+  let username_ = req.body.username_;
+  let email = req.body.email;
+  let first_name = req.body.first_name;
+  let last_name = req.body.last_name;
+
+  let update_query = `UPDATE users SET email="${email}", first_name="${first_name}", last_name="${last_name}" where username = "${username_}"`
+  //redirect somewhere(show page)
+  connection.query(update_query, function(err, updated_item){
+    if(err){
+      console.log(err);
+    }
+    console.log(updated_item);
+    res.redirect("/musiclist/");
+  })
+});
+
+router.put("/order/:username", function(req, res){
+  let total_loyal_added = 0.0;
+  let username = req.body.username;
+  let album_id = req.body.album_id;
+  let album_title = req.body.album_title;
+  let album_price = req.body.album_price;
+
+  console.log("==================test test test test===============");
+
+  console.log(req.body);
+  console.log(req.body.username);
+
+  for(let i=0; i<req.body.username.length; i++){
+    let loyalty_point_given = parseFloat(album_price) * 0.1;
+    total_loyal_added = total_loyal_added + loyalty_point_given;
+
+    let payment_query = `INSERT INTO orders SET ?`
+
+    connection.query(payment_query,{username: username[i], album_id: album_id[i], price: album_price[i]} ,function(err, updated_item){
+      if(err){
+        console.log(err);
+      }
+        console.log(updated_item);
+        let loyalty_quey = `select * from users where username = "${username[i]}"`;
+            connection.query(loyalty_quey, function(err, user){
+              if(err){
+                console.log(err);
+              }
+                else {
+                    let current_loyalty_point =  user[0].loyal_point;
+                    current_loyalty_point += total_loyal_added;
+                    let loyalty_update_query = `UPDATE users SET loyal_point="${current_loyalty_point}" where username = "${username[i]}"`
+                    connection.query(loyalty_update_query, function(err, updated_user){
+                      if(err){
+                        console.log(err);
+                      }
+                      else{
+                        console.log(updated_user);
+                      }
+                    })
+                }
+            })
+
+    })
+  }
+  req.session.shoppingCart = [];
+  res.redirect("/musiclist/");
+
+  // 10% of the album price
+  // let loyalty_point_given = parseInt(album_price) * 0.1;
+  //
+  // let payment_query = `INSERT INTO orders SET ?`
+  // let update_query = `UPDATE users SET email="${email}", first_name="${first_name}", last_name="${last_name}" where username = "${username_}"`
+  // //redirect somewhere(show page)
+  // connection.query(payment_query,{username: username, album_id: album_id, quantity: quantity, description: desc, image: image} ,function(err, updated_item){
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   console.log(updated_item);
+  //   res.redirect("/musiclist/");
+  // })
+});
+
 
 module.exports = router;

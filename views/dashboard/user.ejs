@@ -14,24 +14,24 @@
                                 <h4 class="title">Edit Profile</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form action="/dashboard/<%= userinfo.username %>?_method=PUT" method="POST">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Company (disabled)</label>
-                                                <input type="text" class="form-control" disabled placeholder="Company" value="Creative Code Inc.">
+                                                <label>Loyal Point</label>
+                                                <input type="text" name="loyal_point" class="form-control" disabled placeholder="loyal_point" value="<%= userinfo.loyal_point %>">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input type="text" class="form-control" placeholder="Username" value="michael23">
+                                                <input type="text" name="username_" class="form-control" readonly placeholder="Username" value="<%= userinfo.username %>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email">
+                                                <input type="email" name="email" class="form-control" placeholder="Email" value="<%= userinfo.email %>">
                                             </div>
                                         </div>
                                     </div>
@@ -40,43 +40,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" class="form-control" placeholder="Company" value="Mike">
+                                                <input type="text" name="first_name" class="form-control" placeholder="First name" value="<%= userinfo.first_name %>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Address</label>
-                                                <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>City</label>
-                                                <input type="text" class="form-control" placeholder="City" value="Mike">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Country</label>
-                                                <input type="text" class="form-control" placeholder="Country" value="Andrew">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Postal Code</label>
-                                                <input type="number" class="form-control" placeholder="ZIP Code">
+                                                <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<%= userinfo.last_name %>">
                                             </div>
                                         </div>
                                     </div>
@@ -95,9 +65,10 @@
                                 </form>
                             </div>
                         </div>
+                        <a href="/musiclist">Go Back</a>
                     </div>
 
-
+                    <a class="btn btn-md btn-primary" href="#">Order Histroy</a>
                 </div>
             </div>
         </div>

@@ -19,31 +19,49 @@
                     <p><%= musiclist.description %></p>
                     <p>
                     </p>
-                    <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist.id %>/edit">Buy the Album</a>
 
+                    <form id="shoppingCart-form" action="/musiclist/<%= musiclist.id %>/shoppingCart" method="post">
+                        <input type="hidden" name="id" value="<%= musiclist.id %>">
+                        <input type="hidden" name="title" value="<%= musiclist.title %>">
+                        <input type="hidden" name="price" value="<%= musiclist.price %>">
+                        <button class="btn btn-xs btn-warning">Add to Shopping Cart</button>
+                    </form>
+                    <% if (is_admin === 'Y') { %>
                     <!-- only admin has access to it -->
                         <a class="btn btn-xs btn-warning" href="/musiclist/<%= musiclist.id %>/edit">Edit</a>
                         <form id="delete-form" action="/musiclist/<%= musiclist.id %>" method="post">
                             <button class="btn btn-xs btn-danger">Delete</button>
                         </form>
                     <!-- only admin has access to it -->
-                    <div class="">
-                      <audio controls>
-                          <source src="" type="audio/ogg">
-                          <source src="" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                        </audio>
-                    </div>
+                      <% }; %>
 
+                    <div class="">
+                      <audio controls ontimeupdate="myFunction(this)">
+                          <source src="/<%= musiclist.description %>" type="audio/ogg">
+                          <source src="/<%= musiclist.description %>" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
+                    <% }); %>
                     <div style="margin-top: 10px;">
                         <a class="btn btn-default" href="/musiclist"><i class="fa fa-arrow-left"></i> Go back</a>
                     </div>
                 </div>
-                <% }); %>
+
             </div>
 
         </div>
     </div>
 </div>
+
+<script>
+function myFunction(event) {
+    // Trying to stop the player if it goes above 1 second
+    if (event.currentTime > 10) {
+        event.pause();
+        event.currentTime = 0
+    }
+}
+</script>
 
 <% include ../partials/footer %>

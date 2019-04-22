@@ -1,9 +1,9 @@
 var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
     flash       = require("connect-flash"),
     methodOverride = require("method-override"),
+    session    = require('express-session'),
     mysql = require('mysql');
 
 //requiring routes
@@ -19,6 +19,11 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));

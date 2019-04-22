@@ -42,12 +42,19 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-
+                <% if (!currentUser) { %>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Sign Up</a></li>
-                        <li><a href="/dashboard">My Profile</a></li>
-                        <li><a href="/logout">Logout</a></li>
-                        
+                <% } else { %>
+                    <li><a href="#">Hi, <%= currentUser %></a></li>
+                    <% if (currentUser === 'admin') {%>
+                        <li><a href="/dashboard">Admin dashboard</a></li>
+                    <% }else { %>
+                        <li><a href="/dashboard/<%= currentUser %>">My Profile</a></li>
+                        <li><a href="/musiclist/<%= currentUser %>/shoppingCart">Shopping Cart</a></li>
+                      <% } %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
                 </ul>
             </div>
         </div>

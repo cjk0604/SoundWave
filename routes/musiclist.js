@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+// var song = require("/sound_wave_song.mp3");
+
 
 var con = require("../models/connection");
 
@@ -40,7 +42,7 @@ router.get("/", function (req, res) {
           if(albumlist_.length < 1){
             noMatch = "No albums found, pleaes try again.";
           }
-          res.render("musiclist/index", {musiclist: albumlist_, currentUser: "", noMatch: noMatch});
+          res.render("musiclist/index", {musiclist: albumlist_, currentUser: "", noMatch: noMatch, is_admin: req.session.isAdmin});
         }
       });
     }
@@ -50,9 +52,9 @@ router.get("/", function (req, res) {
     con.query(q, function(err, albumlist_){
       if(err) console.log(err);
 
-      console.log("done!");
+      let userloggedin = req.session.username;
 
-            res.render("musiclist/index", {musiclist: albumlist_, currentUser: "", noMatch: noMatch});
+            res.render("musiclist/index", {musiclist: albumlist_, currentUser: userloggedin, noMatch: noMatch, is_admin: req.session.isAdmin});
         })
       }
     });
@@ -91,13 +93,13 @@ router.post("/", function (req, res) {
           if(err) console.log(err);
 
           console.log("done!");
-          res.render("musiclist/index", {musiclist: albumlist, currentUser: ""});
+          res.render("musiclist/index", {musiclist: albumlist, currentUser: req.session.username, noMatch: null, is_admin: req.session.isAdmin});
         })
 });
 
 //NEW - show form to create new musiclist
 router.get("/new", function (req, res) {
-    res.render("musiclist/new", {currentUser: ""});
+    res.render("musiclist/new", {currentUser: req.session.username});
 });
 
 // SHOW - shows more info about one musiclist
@@ -105,12 +107,12 @@ router.get("/:id", function (req, res) {
     let music_id = req.params.id;
     console.log(music_id);
 
-    var q = `select * from albums where id=${music_id}`;
+    let q = `select * from albums where id=${music_id}`;
 
     con.query(q, function(err, foundMusiclist){
       if(err) console.log(err);
          console.log(foundMusiclist);
-      res.render("musiclist/show", {musiclist: foundMusiclist, currentUser: ""});
+      res.render("musiclist/show", {musiclist: foundMusiclist, currentUser: req.session.username, is_admin: req.session.isAdmin, song: "sound_wave_song.mp3"});
 
   });
 });
@@ -130,7 +132,7 @@ router.get("/:id/edit", function (req, res) {
         console.log("done!");
         console.log(albumlist)
 
-        res.render("musiclist/edit", {musiclist: albumlist, currentUser: ""});
+        res.render("musiclist/edit", {musiclist: albumlist, currentUser: req.session.username});
       });
 });
 
@@ -169,5 +171,58 @@ router.post("/:id", function (req, res) {
       // albumList.pop();
       //   res.render("musiclist/index", {musiclist: albumList, currentUser: ""});
 });
+
+// Add to Shopping Cart Route
+router.post("/:id/shoppingCart", function(req, res){
+  let album_id = req.body.id;
+  let username = req.session.username;
+  let album_title = req.body.title;
+  let album_price = req.body.price;
+  let shoppingCart = req.session.shoppingCart
+  if(!filtering(shoppingCart, album_id)){
+    req.session.shoppingCart.push({album_id: album_id, username: username, album_title: album_title, album_price: album_price});
+  }
+  console.log(req.session.shoppingCart);
+  res.redirect("/musiclist");
+
+})
+
+router.get("/:id/shoppingCart", function(req, res){
+    console.log(req.session.shoppingCart);
+
+  // let user_query = `select * from users where username="${username}"`;
+  // let album_query = `select * from albums where id="${album_id}"`;
+  // con.query(user_query, function(err, userlist){
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   else{
+  //     console.log(userlist);
+  //     con.query(album_query, function(err, albumlist){
+  //       if(err){
+  //         console.log(err)
+  //       }
+  //       else{
+  //         console.log(albumlist);
+          res.render("shoppingCart/cart", {currentUser: req.session.username, shoppingCart: req.session.shoppingCart});
+  //       }
+  //     })
+  //   }
+  // })
+});
+
+
+// verify if there is duplicate album in the shoppingCart
+function filtering(vendors, albumID){
+  let found = false;
+  for(var i = 0; i < vendors.length; i++) {
+      if (vendors[i].album_id == albumID) {
+          found = true;
+          break;
+      }
+  }
+  return found;
+}
+
 
 module.exports = router;
