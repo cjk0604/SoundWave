@@ -108,12 +108,24 @@ router.get("/:id", function (req, res) {
     console.log(music_id);
 
     let q = `select * from albums where id=${music_id}`;
+    let query_order = `select * from orders where username = "${req.session.username}"`
+    let audioVerified = false;
 
     con.query(q, function(err, foundMusiclist){
       if(err) console.log(err);
-         console.log(foundMusiclist);
-      res.render("musiclist/show", {musiclist: foundMusiclist, currentUser: req.session.username, is_admin: req.session.isAdmin, song: "sound_wave_song.mp3"});
 
+      else{
+          con.query(query_order, function(err, orderlist){
+            if(orderlist.length > 0){
+              audioVerified = true;
+            }
+
+            console.log(foundMusiclist);
+            console.log(audioVerified);
+            res.render("musiclist/show", {musiclist: foundMusiclist, currentUser: req.session.username, is_admin: req.session.isAdmin, audioVerified: audioVerified});
+          })
+
+      }
   });
 });
 
