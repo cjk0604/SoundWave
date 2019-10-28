@@ -87,6 +87,51 @@ router.get("/:username/order", function(req, res){
     })
 })
 
+router.post("/:username/order", function(req, res){
+  let username = req.params.username;
+  let order_id = req.body.id;
+  let order_price = parseInt(req.body.price);
+  console.log("============price===============")
+  console.log(order_price);
+
+  console.log("============username===============")
+  console.log(username);
+
+  console.log(order_id);
+  let date_diff = `select data_of_order from orders where id = ${order_id}`;
+  let refund_query = `select datediff(now(), (${date_diff})) as difference`;
+
+  connection.query(refund_query, function(err, datedifference){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(datedifference);
+      let difference = datedifference[0].difference;
+
+        if(difference > 3){
+          let refund_status = `UPDATE orders SET refund_status ='L' where id = "${order_id}"`;
+            connection.query(refund_status, function(err, results){
+              console.log(results);
+            });
+        }
+        else{
+
+            let delete_order_query = `DELETE FROM orders where id = ${order_id}`;
+            connection.query(delete_order_query, function(err, delete_result){
+              console.log(delete_result);
+                let loyalty_refund_query = `UPDATE users SET loyal_point = loyal_point + ${order_price} where username = "${username}"`;
+                  connection.query(loyalty_refund_query, function(err, loyalty_results){
+                    console.log("============loyal point update===============")
+                    console.log(loyalty_results);
+                  })
+            })
+        }
+    }
+    res.redirect(`/dashboard/${username}`);
+  })
+})
+
 router.put("/order/:username", function(req, res){
   let total_loyal_added = 0.0;
   let username = req.body.username;

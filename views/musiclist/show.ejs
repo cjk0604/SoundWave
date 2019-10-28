@@ -37,7 +37,7 @@
 
                     <div class="" onload="myFunction2()">
 
-                      <audio id = "controlbit" controls controlsList="download" ontimeupdate="myFunction(this)" onclick="myFunction2()" >
+                      <audio id = "controlbit" controls controlsList="nodownload" ontimeupdate="myFunction(this)" >
                           <source src="/<%= musiclist.description %>" type="audio/ogg">
                           <source src="/<%= musiclist.description %>" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -65,12 +65,11 @@ function myFunction(event) {
         event.currentTime = 0
     }
 }
-function myFunction2(){
-  document.getElementById('controlbit').controlsList= "nodownload"
-}
+
 <% } else {%>
   function myFunction(event) {
       // Trying to stop the player if it goes above 1 second
+      document.getElementById('controlbit').controlsList= "download"
       console.log(event);
 <%  } %>
 

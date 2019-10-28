@@ -99,7 +99,7 @@ tr:nth-child(even) {
     <tr>
       <th scope="row">create</th>
       <td>post</td>
-      <td>/logout</td>
+      <td>/login</td>
       <td>Handle login logic</td>
     </tr>
    </tbody>
@@ -119,13 +119,14 @@ tr:nth-child(even) {
     <tr>
       <th scope="row">read</th>
       <td>get</td>
-      <td>/login</td>
+      <td>/logout</td>
       <td>Show the logout page</td>
     </tr>
    </tbody>
 </table>
 
 <br>
+
 <h2>Musiclist routes </h2>
 
 <h3>musiclist root</h3>
@@ -152,7 +153,7 @@ tr:nth-child(even) {
       <th scope="row">create</th>
       <td>post</td>
       <td>/musiclist</td>
-      <td>Add ne musiclist to database</td>
+      <td>Add new musiclist to database</td>
     </tr>
    </tbody>
 </table>
@@ -195,6 +196,35 @@ tr:nth-child(even) {
       <td>Show more information about the specific id</td>
     </tr>
    </tbody>
+</table>
+
+<h3>upload song</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/musiclist/:id/uploadsong</td>
+      <td>Show form to upload songs of specific id</td>
+    </tr>
+   </tbody>
+
+   <tbody>
+      <tr>
+        <th scope="row">create</th>
+        <td>post</td>
+        <td>/musiclist/upload/addsong</td>
+        <td>Upload songs to the specific id</td>
+      </tr>
+     </tbody>
 </table>
 
 <h3>edit</h3>
@@ -257,7 +287,7 @@ tr:nth-child(even) {
    </tbody>
 </table>
 
-<h3>user profile</h3>
+<h3>shopping Cart</h3>
 <table class="table">
   <thead>
     <tr>
@@ -271,11 +301,118 @@ tr:nth-child(even) {
     <tr>
       <th scope="row">read</th>
       <td>get</td>
-      <td>/musiclist/:user</td>
-      <td>Show user profile</td>
+      <td>/musiclist/:id/shoppingCart</td>
+      <td>Show shopping cart of specific id</td>
+    </tr>
+   </tbody>
+
+   <tbody>
+      <tr>
+        <th scope="row">create</th>
+        <td>post</td>
+        <td>/musiclist/:id/shoppingCart</td>
+        <td>Add to the shopping cart of specific id</td>
+      </tr>
+     </tbody>
+</table>
+
+<br>
+
+<h2>Dashboard routes </h2>
+
+<h3>admin dashboard</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/dashboard</td>
+      <td>Show the admin dashboard page</td>
     </tr>
    </tbody>
 </table>
+
+<h3>user page</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/dashboard/:username</td>
+      <td>Show user information page of specific username</td>
+    </tr>
+   </tbody>
+
+   <tbody>
+      <tr>
+        <th scope="row">update</th>
+        <td>put</td>
+        <td>/dashboard/:username</td>
+        <td>Update user information of specific username</td>
+      </tr>
+     </tbody>
+
+</table>
+
+<h3>user order record</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">read</th>
+      <td>get</td>
+      <td>/dashboard/:username/order</td>
+      <td>Show user order record page of specific username</td>
+    </tr>
+   </tbody>
+
+   </table>
+
+<h3>add order to shopping cart</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">update</th>
+      <td>put</td>
+      <td>/dashboard/order/:username</td>
+      <td>Proceed payment of order of specific username</td>
+    </tr>
+   </tbody>
+   </table>
+
+</body>
+
 
 </body>
 </html>

@@ -109,7 +109,8 @@
                                           <th>Album ID</th>
                                           <th>Price</th>
                                           <th>Purchase Date</th>
-                                          <th>Return Status</th>
+                                          <th>Refund Status</th>
+                                          <th>Refund</th>
                                         </thead>
                                         <tbody>
                                             <% allOrders.forEach(function(order) {%>
@@ -120,6 +121,18 @@
                                               <td><%= order.price%></td>
                                               <td><%= order.data_of_order%></td>
                                               <td><%= order.refund_status%></td>
+                                              <td>
+                                                  <% if(order.refund_status === 'L' || order.refund_status === 'Y') { %>
+
+                                                  <% } else { %>
+                                                  <form id="delete-form" action="/dashboard/<%= order.username %>/order" method="post">
+                                                    <input type="hidden" name="id" value="<%= order.id %>">
+                                                    <input type="hidden" name="price" value="<%= order.price %>">
+                                                    <button class="btn btn-xs btn-danger">Refund</button>
+                                                  </form>
+                                                  <% } %>
+                                              </td>
+
                                             </tr>
                                             <% }) %>
                                         </tbody>
