@@ -1,6 +1,5 @@
-*.html linguist-vendored
-css/* linguist-vendored
-*.gs linguist-language=Javascript
+* linguist-vendored
+*.js linguist-vendored=false
 
 
 
