@@ -1,4 +1,6 @@
 *.html linguist-vendored
-*.css linguist-vendored
+css/* linguist-vendored
+*.gs linguist-language=Javascript
+
 
 
